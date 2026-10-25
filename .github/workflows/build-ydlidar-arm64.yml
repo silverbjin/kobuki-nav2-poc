@@ -158,8 +158,9 @@ jobs:
           # Temporarily disable nounset for ROS environment setup
           set +u
           source /opt/ros/humble/setup.bash
-          set -u
           source "$DRIVER_PREFIX/setup.bash"
+          set -u
+          
 
           ros2 pkg prefix ydlidar_ros2_driver
           ros2 pkg executables ydlidar_ros2_driver
