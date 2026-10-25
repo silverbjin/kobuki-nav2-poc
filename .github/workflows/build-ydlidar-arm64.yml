@@ -75,7 +75,11 @@ jobs:
             python3-colcon-common-extensions \
             git build-essential cmake pkg-config file binutils
 
+          # Temporarily disable nounset for ROS environment setup
+          set +u
           source /opt/ros/humble/setup.bash
+          set -u
+          
           test "$ROS_DISTRO" = "humble"
 
       - name: Fetch pinned official YDLidar-SDK
@@ -125,7 +129,10 @@ jobs:
       - name: Build ROS 2 driver against installed SDK
         run: |
           set -euo pipefail
+          # Temporarily disable nounset for ROS environment setup
+          set +u
           source /opt/ros/humble/setup.bash
+          set -u
 
           # SDK CMake package is installed in a nonstandard prefix.
           export CMAKE_PREFIX_PATH="$SDK_PREFIX:${CMAKE_PREFIX_PATH:-}"
@@ -148,7 +155,10 @@ jobs:
       - name: Verify installed ROS package, X4 config and executable
         run: |
           set -euo pipefail
+          # Temporarily disable nounset for ROS environment setup
+          set +u
           source /opt/ros/humble/setup.bash
+          set -u
           source "$DRIVER_PREFIX/setup.bash"
 
           ros2 pkg prefix ydlidar_ros2_driver
