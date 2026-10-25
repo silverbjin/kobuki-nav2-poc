@@ -25,7 +25,7 @@ jobs:
       # 2. Verify build architecture
       - name: Check ARM64 environment
         run: |
-          set -euo pipefail
+          set -eo pipefail
           uname -m
           dpkg --print-architecture
           cat /etc/os-release
@@ -38,7 +38,7 @@ jobs:
       # 3. Register official ROS repository
       - name: Install ROS APT repository
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           sudo apt-get update
           sudo apt-get install -y \
@@ -59,7 +59,7 @@ jobs:
       # 4. Install ROS and build dependencies
       - name: Install ROS Humble dependencies
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           sudo apt-get install -y \
             ros-humble-ros-base \
@@ -81,7 +81,7 @@ jobs:
       # 5. Fetch official Kobuki source
       - name: Get Kobuki official source
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           mkdir -p ws/src
           cd ws/src
@@ -104,7 +104,7 @@ jobs:
       # 6. Resolve only kobuki_node dependencies
       - name: Install kobuki_node dependencies
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           source /opt/ros/humble/setup.bash
           cd ws
@@ -118,7 +118,7 @@ jobs:
       # 7. Native ARM64 build
       - name: Build kobuki_node
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           source /opt/ros/humble/setup.bash
 
@@ -141,7 +141,7 @@ jobs:
       # 8. Verify built binary
       - name: Verify ARM64 package
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           source /opt/ros/humble/setup.bash
           source /opt/kobuki_overlay/setup.bash
@@ -168,7 +168,7 @@ jobs:
       # 9. Package fixed install directory
       - name: Create deployment archive
         run: |
-          set -euo pipefail
+          set -eo pipefail
 
           tar -C /opt -czf \
             "$RUNNER_TEMP/kobuki_overlay_arm64.tar.gz" \
